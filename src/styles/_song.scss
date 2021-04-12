@@ -1,0 +1,37 @@
+.song-container {
+    font-family: 'Open Sans Condensed', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 60vh;
+    justify-content: center;
+    
+    
+}
+
+.img {
+    max-height: 280px;
+    max-width: 280px;
+    position: relative;
+       
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 5px;
+        box-shadow: 0 5px 15px 2px rgba(0, 0, 0, 0.5);
+    }
+}
+
+h2 {
+    font-size: 25px;
+    text-align: center;
+    margin: 20px;
+}
+
+h3 {
+    font-size: 20px;
+    text-align: center;
+    margin: 0;
+    color: rgb(129, 130, 131);
+}
