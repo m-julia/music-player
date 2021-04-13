@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPlay,  faAngleLeft, faAngleRight, faPause} from '@fortawesome/free-solid-svg-icons';
-import playAudio from '../playAudio';
 
 const Player = ({
     currentSong,
@@ -25,22 +24,22 @@ const Player = ({
         setCurrentTime(e.target.value);
     }
 
-    const skipTrackHandler = (direction) => {
+    const skipTrackHandler = async (direction) => {
        let currentIndex = songs.findIndex((song) => song.id === currentSong.id)
        switch (direction) {
             case 'skip-forward':
-                setCurrentSong(songs[(currentIndex + 1) % songs.length])
+                await setCurrentSong(songs[(currentIndex + 1) % songs.length])
                 break;
             case 'skip-back':
                 if (currentIndex === 0 ) {
-                    setCurrentSong(songs[songs.length - 1]);
-                    playAudio(isPlaying, audioRef);
+                    await setCurrentSong(songs[songs.length - 1]);
+                    if (isPlaying) audioRef.current.play();
                     return;
                 }
-                setCurrentSong(songs[(currentIndex - 1) % songs.length])
+                await setCurrentSong(songs[(currentIndex - 1) % songs.length])
                 break;
        }
-       playAudio(isPlaying, audioRef);
+       if (isPlaying) audioRef.current.play();
     };
 
     useEffect(() => {
@@ -58,6 +57,7 @@ const Player = ({
             }
         });
         setSongs(newSongs);
+        console.log('Hi from useEffect')
     }, [currentSong]);
 
     const progressStyle = {

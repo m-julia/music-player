@@ -37,8 +37,14 @@ const playSongHandler = () => {
   }
 }
 
+const songEndHandler = async () => {
+  let currentIndex = songs.findIndex((song) => song.id === currentSong.id);
+  await setCurrentSong(songs[(currentIndex + 1) % songs.length]);
+  if (isPlaying) audioRef.current.play();
+}
+
   return (
-    <div className="app">
+    <div className={`app ${isOpenPlayList ? "play-list-active" : ""}` }>
       <Nav 
         isOpenPlayList={isOpenPlayList}
         setIsOpenPlayList={setIsOpenPlayList}
@@ -77,7 +83,8 @@ const playSongHandler = () => {
         ref={audioRef} 
         src={currentSong.audio}
         onTimeUpdate={timeUpdateHandler}
-        onLoadedMetadata={timeUpdateHandler}>
+        onLoadedMetadata={timeUpdateHandler}
+        onEnded={songEndHandler}>
       </audio>
     </div>
   );

@@ -4,6 +4,7 @@
 }
 
 
+
 .play-list {
     position: fixed;
     top: 0;
@@ -58,9 +59,15 @@
 }
 
 .is-open {
-    
     transform: translateX(0%);
     box-shadow: 1px 3px 40px rgba(0, 0, 0, 0.3);
     opacity: 1;
 
 }
+
+@media screen and (max-width: 768px) {
+    .play-list {
+        width: 100%;
+    }
+}
+
