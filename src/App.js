@@ -13,6 +13,7 @@ const App = () => {
  const [isPlaying, setIsPlaying] = useState(false);
  const [currentTime, setCurrentTime] = useState(0);
  const [duration, setDuration] = useState(0);
+ const [progress, setProgress] = useState(0);
  const [isOpenPlayList, setIsOpenPlayList] = useState(false);
 
  const audioRef = useRef(null);
@@ -20,8 +21,10 @@ const App = () => {
  const timeUpdateHandler = (e) => {
   const current = e.target.currentTime;
   const duration = e.target.duration;
+  const currentProgress = Math.round((current / duration) * 100);
   setCurrentTime(current);
   setDuration(duration);
+  setProgress(currentProgress);
 }
 
 const playSongHandler = () => {
@@ -49,10 +52,12 @@ const playSongHandler = () => {
         audioRef={audioRef}
         currentTime={currentTime}
         duration={duration}
+        progress={progress}
         playSongHandler={playSongHandler}
         songs={songs}
         setSongs={setSongs}
         setCurrentTime={setCurrentTime}
+
       />
 
       <PlayList 

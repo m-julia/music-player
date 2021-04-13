@@ -3,8 +3,18 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPlay,  faAngleLeft, faAngleRight, faPause} from '@fortawesome/free-solid-svg-icons';
 import playAudio from '../playAudio';
 
-const Player = ({currentSong, setCurrentSong, isPlaying, songs, setSongs,
-    setIsPlaying, audioRef, currentTime, setCurrentTime, duration, playSongHandler}) => {
+const Player = ({
+    currentSong,
+    setCurrentSong,
+    isPlaying,
+    songs,
+    setSongs,
+    audioRef,
+    currentTime,
+    setCurrentTime,
+    duration,
+    progress,
+    playSongHandler}) => {
 
     const transformationTime = (time) => {
         return Math.floor(time / 60) + ':' + ('0' + Math.floor(time % 60)).slice(-2);
@@ -50,16 +60,27 @@ const Player = ({currentSong, setCurrentSong, isPlaying, songs, setSongs,
         setSongs(newSongs);
     }, [currentSong]);
 
+    const progressStyle = {
+        width: `${progress}%`, 
+        background: `linear-gradient(to right, ${currentSong.color[0]}, ${currentSong.color[1]})`,
+        
+    }
+
     return(
         <div className="player">
             <div className="time-control">
                 <span>{transformationTime(currentTime)}</span>
-                <input 
-                    type="range"
-                    min={0}
-                    max={String(duration)}
-                    value={currentTime}
-                    onChange={dragHandler} />
+                <div className="input-container">
+                    <input 
+                        type="range"
+                        min={0}
+                        max={String(duration)}
+                        value={currentTime}
+                        onChange={dragHandler} 
+                    />
+                    <div style={progressStyle} className="progress-bar" ></div>
+                </div>
+                
                 <span>{duration ? transformationTime(duration) : '0:00'}</span>
             </div>
 
